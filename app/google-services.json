@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "144804628673",
+    "project_id": "uclicc",
+    "storage_bucket": "uclicc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144804628673:android:9b7b852ac9519ae639ec40",
+        "android_client_info": {
+          "package_name": "com.ketchupzzz.cathyattendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144804628673-kbkiu5vggs71i87s11g7hvov1m4423n3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrj9GD270_ySAH9hz53y489sywT92LRzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144804628673-kbkiu5vggs71i87s11g7hvov1m4423n3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
