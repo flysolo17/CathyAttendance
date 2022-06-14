@@ -3,13 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/cards_background.xml" value="0.2225" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_group_16.xml" value="0.2595" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_rectangle_199.xml" value="0.2035" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_rectangle_200.xml" value="0.2225" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_create_account.xml" value="0.2" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_main.xml" value="0.25052083333333336" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_student_main_screen.xml" value="0.25416666666666665" />
-        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_teacher_main_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_teacher_main_screen.xml" value="0.2" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_classes.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_create_class.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/progress_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_class.xml" value="0.4" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/menu/teacher_bottom_nav.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

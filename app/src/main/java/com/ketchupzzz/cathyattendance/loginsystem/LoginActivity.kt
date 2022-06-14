@@ -9,13 +9,18 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ketchupzzz.cathyattendance.R
 import com.ketchupzzz.cathyattendance.databinding.ActivityLoginBinding
@@ -23,15 +28,20 @@ import com.ketchupzzz.cathyattendance.dialogs.ProgressDialog
 import com.ketchupzzz.cathyattendance.models.Users
 import com.ketchupzzz.cathyattendance.studentUI.StudentMainScreen
 import com.ketchupzzz.cathyattendance.techearUi.TeacherMainScreen
+import java.util.*
 
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var firestore : FirebaseFirestore
     private lateinit var progressDialog : ProgressDialog
+    private lateinit var firebaseAuth : FirebaseAuth
+    private lateinit var validation: Validation
     private fun init() {
         firestore = FirebaseFirestore.getInstance()
         progressDialog = ProgressDialog(this)
+        firebaseAuth = FirebaseAuth.getInstance()
+        validation = Validation()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +50,57 @@ class LoginActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         init()
         signUp(binding.textCreateAccount)
+        binding.buttonLoginAccount.setOnClickListener {
+            val email = binding.inputEmail.text.toString()
+            val password = binding.inputPassword.text.toString()
+            if (!validation.validateCard(binding.inputEmail)) {
+                return@setOnClickListener
+            }
+            else if (!validation.validatePassword(binding.inputPassword)){
+                return@setOnClickListener
+            } else {
+                signInWithEmail(email,password)
+            }
+        }
 
+    }
+    private fun signInWithEmail(email : String, password : String){
+        progressDialog.loading("Logging in....")
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val currentUser: FirebaseUser? = firebaseAuth.currentUser
+                    progressDialog.stopLoading()
+                    updateUI(currentUser!!.uid)
+                } else if (!it.isSuccessful) {
+                    try {
+                        throw Objects.requireNonNull<Exception>(it.exception)
+                    } // if user enters wrong email.
+                    catch (invalidEmail: FirebaseAuthInvalidUserException) {
+                        progressDialog.stopLoading()
+                        Log.d(LOGIN_ACTIVITY, "onComplete: invalid_email")
+                        Toast.makeText(applicationContext, "Invalid Email", Toast.LENGTH_SHORT)
+                            .show()
 
+                    } // if user enters wrong password.
+                    catch (wrongPassword: FirebaseAuthInvalidCredentialsException) {
+                        Log.d(
+                            LOGIN_ACTIVITY, "onComplete: wrong_password"
+                        )
+                        progressDialog.stopLoading()
+                        Toast.makeText(applicationContext, "Wrong Password", Toast.LENGTH_SHORT)
+                            .show()
+                    } catch (e: Exception) {
+                        progressDialog.stopLoading()
+                        Log.d(LOGIN_ACTIVITY, "onComplete: " + e.message)
+                    }
+                } else {
+                    progressDialog.stopLoading()
+                    // If sign in fails, display a message to the user.
+                    Log.w(LOGIN_ACTIVITY, "signInWithCredential:failure", it.exception)
+                    Snackbar.make(binding.root, "Login Failed.", Snackbar.LENGTH_SHORT).show()
+                }
+            }
     }
     private fun signUp( textview : TextView) {
         val ss = SpannableString(getString(R.string.don_t_have_an_account_sign_up))
@@ -77,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
             .show()
     }
     private fun updateUI(userID : String){
-        progressDialog.loading("Logging in......")
+        progressDialog.loading("Verifying user......")
         firestore.collection("Users")
             .document(userID)
             .get().addOnSuccessListener { document ->
@@ -109,5 +168,8 @@ class LoginActivity : AppCompatActivity() {
         if (currentUser != null){
             updateUI(currentUser.uid)
         }
+    }
+    companion object {
+        const val LOGIN_ACTIVITY = ".LoginActivity"
     }
 }

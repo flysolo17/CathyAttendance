@@ -12,4 +12,8 @@
     <string name="firstname">Firstname</string>
     <string name="create_account">Create Account</string>
     <string name="id_number">ID Number</string>
+    <string name="computer_programming_ictoo1_ict002">Computer Programming (ICTOO1-ICT002)</string>
+    <string name="my_classes">My Classes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -73,6 +73,7 @@
             android:backgroundTint="#FFC107"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/login"
+            android:id="@+id/buttonLoginAccount"
             android:textAllCaps="false"
             android:textSize="18sp"/>
         <TextView
