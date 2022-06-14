@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".techearUi.TeacherMainScreen">
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,7 +40,7 @@
                 />
         </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -47,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:fabCradleMargin="10dp"
+        app:hideOnScroll="true"
         android:id="@+id/bottomAppBar"
         android:background="@drawable/ic_shape"
         app:fabCradleRoundedCornerRadius="10dp"
@@ -67,8 +69,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+
         android:focusable="true"
         app:backgroundTint="#FFC107"
         app:layout_anchor="@id/bottomAppBar"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        android:contentDescription="@string/create_class" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

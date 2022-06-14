@@ -16,4 +16,8 @@
     <string name="my_classes">My Classes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_class">create class</string>
+    <string name="class_title">Class title</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,9 +30,81 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+
         android:background="@drawable/cards_background">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imageClass"
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
+                android:background="@color/black"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="10dp"
+                    android:id="@+id/buttonGallery"
+                    android:background="@drawable/ic_gallery"/>
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/ic_camera"/>
+            </LinearLayout>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/inputClassTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/class_title"
+            android:textSize="15sp"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:inputType="textMultiLine"
+            android:background="@drawable/ic_rectangle_200"/>
+        <EditText
+            android:id="@+id/inputClassDesc"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="@string/description"
+            android:textSize="15sp"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:gravity="start"
+            android:inputType="textMultiLine"
+            android:background="@drawable/ic_rectangle_200"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabSaveClass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:clickable="true"
+            android:layout_margin="16dp"
+            android:drawableEnd="@drawable/ic_save"
+            android:text="@string/save"
+            app:backgroundTint="#FFC107"
+            android:focusable="true" />
 
     </LinearLayout>
-
 
 </LinearLayout>

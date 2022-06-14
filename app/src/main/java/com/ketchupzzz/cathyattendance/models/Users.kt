@@ -8,4 +8,7 @@ data class Users(val userID : String? = null,
                  val lastname : String = "",
                  val userType : String? = null,
                  val email : String ? = null) {
+    companion object {
+        const val TABLE_NAME = "Users"
+    }
 }
