@@ -3,50 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="10dp"
     app:cardCornerRadius="10dp"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="100dp"
+        android:orientation="horizontal">
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:background="@drawable/comp_room"/>
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageClass"
+            android:scaleType="centerCrop"
+            android:background="@drawable/teaching"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="10dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
                     android:text="@string/computer_programming_ictoo1_ict002"
                     android:fontFamily="@font/poppins_medium"
                     android:textColor="@color/black"
-                    android:layout_weight="1"
-                    android:textSize="18sp"/>
-                <Switch
-                    android:id="@+id/switch1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-            </LinearLayout>
-
+                    android:id="@+id/textClassTitle"
+                    android:textSize="16sp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="60 Students"
-                android:fontFamily="@font/poppins_light"/>
+                android:text="@string/computer_programming_ictoo1_ict002"
+                android:fontFamily="@font/poppins_light"
+                android:textColor="@color/black"
+                android:id="@+id/textClasDesc"
+                />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
