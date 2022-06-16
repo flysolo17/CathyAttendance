@@ -1,2 +1,2 @@
-# CathyAttendance
-Attendance System with Grading System and a bunch of other features
+# uClicc
+Attendance System with Grading and Student records
