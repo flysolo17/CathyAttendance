@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.ketchupzzz.cathyattendance.techearUi.bottom_nav.ClassesFragment"
         android:label="Classes"
-        tools:layout="@layout/fragment_classes" />
+        tools:layout="@layout/fragment_classes" >
+        <action
+            android:id="@+id/action_nav_home_to_classroomFragment"
+            app:destination="@id/classroomFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.ketchupzzz.cathyattendance.techearUi.bottom_nav.ProfileFragment"
@@ -20,4 +24,13 @@
         android:name="com.ketchupzzz.cathyattendance.techearUi.bottom_nav.CreateClassFragment"
         android:label="Create Class"
         tools:layout="@layout/fragment_create_class" />
+    <fragment
+        android:id="@+id/classroomFragment"
+        android:name="com.ketchupzzz.cathyattendance.techearUi.classroom.ClassroomFragment"
+        android:label="fragment_classroom"
+        tools:layout="@layout/fragment_classroom" >
+        <argument
+            android:name="classroom"
+            app:argType="com.ketchupzzz.cathyattendance.models.SubjectClass" />
+    </fragment>
 </navigation>

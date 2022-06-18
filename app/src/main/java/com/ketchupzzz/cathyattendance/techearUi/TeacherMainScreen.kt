@@ -56,7 +56,7 @@ class TeacherMainScreen : AppCompatActivity() {
     }
     private fun hideBottomNav() {
         binding.bottomAppBar.performHide(true)
+        binding.bottomAppBar.hideOnScroll = false
         binding.floatingActionButton.hide()
-
     }
 }

@@ -11,9 +11,12 @@ import com.ketchupzzz.cathyattendance.R
 import com.ketchupzzz.cathyattendance.models.SubjectClass
 import com.squareup.picasso.Picasso
 
-class SubjectClassAdapter(val context: Context, private val classList: List<SubjectClass>) :
+class SubjectClassAdapter(val context: Context, private val classList: List<SubjectClass>,
+                          private val viewClassroom: ViewClassroom) :
     RecyclerView.Adapter<SubjectClassAdapter.SubjectClassViewHolder>() {
-
+    interface ViewClassroom {
+        fun onClassroomClick(position: Int)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectClassViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.row_class,parent,false)
         return SubjectClassViewHolder(view)
@@ -25,6 +28,9 @@ class SubjectClassAdapter(val context: Context, private val classList: List<Subj
         holder.textClassDesc.text = subjectClass.classDesc
         if (subjectClass.classProfile!!.isNotEmpty()) {
             Picasso.get().load(subjectClass.classProfile).placeholder(R.drawable.teaching).into(holder.imageClass)
+        }
+        holder.itemView.setOnClickListener {
+            viewClassroom.onClassroomClick(position)
         }
     }
 

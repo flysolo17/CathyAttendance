@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import com.ketchupzzz.cathyattendance.R
 import com.ketchupzzz.cathyattendance.databinding.FragmentClassesBinding
 import com.ketchupzzz.cathyattendance.dialogs.ProgressDialog
 import com.ketchupzzz.cathyattendance.models.SubjectClass
@@ -24,7 +27,7 @@ import com.ketchupzzz.cathyattendance.techearUi.adapter.SubjectClassAdapter
 import com.squareup.picasso.Picasso
 
 
-class ClassesFragment : Fragment() {
+class ClassesFragment : Fragment(),SubjectClassAdapter.ViewClassroom {
     private lateinit var binding : FragmentClassesBinding
     private lateinit var subjectClassAdapter: SubjectClassAdapter
     private lateinit var classList: MutableList<SubjectClass>
@@ -81,10 +84,9 @@ class ClassesFragment : Fragment() {
                         if (documentSnapshot != null) {
                             val subjectClass: SubjectClass = documentSnapshot.toObject(SubjectClass::class.java)
                             classList.add(subjectClass)
-
                         }
                     }
-                    subjectClassAdapter = SubjectClassAdapter(binding.root.context, classList)
+                    subjectClassAdapter = SubjectClassAdapter(binding.root.context, classList,this)
                     noClasses(classList)
                     binding.recyclerviewMyClass.adapter = subjectClassAdapter
                 }
@@ -139,5 +141,10 @@ class ClassesFragment : Fragment() {
 
     companion object {
         const val TAG = ".ClassesFragment"
+    }
+
+    override fun onClassroomClick(position: Int) {
+        val action :NavDirections = ClassesFragmentDirections.actionNavHomeToClassroomFragment(classList[position])
+        Navigation.findNavController(binding.root).navigate(action)
     }
 }
