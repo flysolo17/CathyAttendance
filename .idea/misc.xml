@@ -3,25 +3,46 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable-v24/ic_rectangle_204.xml" value="0.1965" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable-v24/icon_color.xml" value="0.3675" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/cards_background.xml" value="0.2225" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_group_16.xml" value="0.2595" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_group_3.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_group_4.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_logout.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_more.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_notification.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_person.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_profile.xml" value="0.208" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_rectangle_199.xml" value="0.2035" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_rectangle_200.xml" value="0.2225" />
-        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_create_account.xml" value="0.2" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_rectangle_2001.xml" value="0.142" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_save.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_setting___3.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_settings.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_shape.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/drawable/ic_uclicc.xml" value="0.208" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_create_account.xml" value="0.4" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_google_sign_in.xml" value="0.35260416666666666" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_main.xml" value="0.25052083333333336" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_student_main_screen.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_teacher_main_screen.xml" value="0.2" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_attendance.xml" value="0.18854166666666666" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_classes.xml" value="0.2" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_classroom.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_create_announcement.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_create_class.xml" value="0.4" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_edit_profile_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_home_tab.xml" value="0.25416666666666665" />
-        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_profile.xml" value="0.22479721900347624" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_settings_tab.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_students.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_students_tab.xml" value="0.264" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/progress_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_anouncement.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_class.xml" value="0.4" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_students.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/menu/teacher_bottom_nav.xml" value="0.25416666666666665" />

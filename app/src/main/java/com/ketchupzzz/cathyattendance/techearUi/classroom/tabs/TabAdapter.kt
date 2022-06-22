@@ -16,13 +16,14 @@ class TabAdapter(
     override fun createFragment(position: Int): Fragment {
         return when(position) {
             0 -> HomeTabFragment()
-            1 -> StudentsFragment()
-            2 -> SettingsFragment()
+            1 -> AttendanceFragment()
+            2 -> StudentsFragment()
+            3 -> SettingsFragment()
             else -> HomeTabFragment()
         }
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return 4
     }
 }

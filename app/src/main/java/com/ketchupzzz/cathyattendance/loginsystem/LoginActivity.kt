@@ -4,6 +4,7 @@ package com.ketchupzzz.cathyattendance.loginsystem
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.support.annotation.NonNull
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -15,12 +16,18 @@ import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.CallbackManager.Factory.create
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ketchupzzz.cathyattendance.R
 import com.ketchupzzz.cathyattendance.databinding.ActivityLoginBinding
@@ -37,11 +44,16 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var progressDialog : ProgressDialog
     private lateinit var firebaseAuth : FirebaseAuth
     private lateinit var validation: Validation
+    private lateinit var callbackManager: CallbackManager
+
+
     private fun init() {
         firestore = FirebaseFirestore.getInstance()
         progressDialog = ProgressDialog(this)
         firebaseAuth = FirebaseAuth.getInstance()
         validation = Validation()
+
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +62,9 @@ class LoginActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         init()
         signUp(binding.textCreateAccount)
+
+
+
         binding.buttonLoginAccount.setOnClickListener {
             val email = binding.inputEmail.text.toString()
             val password = binding.inputPassword.text.toString()
@@ -63,6 +78,28 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        callbackManager = create()
+
+
+        // Callback registration
+        // Callback registration
+        binding.loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                loginWithFacebook(loginResult.accessToken)
+            }
+
+            override fun onCancel() {
+                Toast.makeText(this@LoginActivity,"Cancelled",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onError(exception: FacebookException) {
+                Log.d(TAG,exception.message.toString())
+            }
+        })
+        binding.loginButton.setOnClickListener{
+
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
+        }
     }
     private fun signInWithEmail(email : String, password : String){
         progressDialog.loading("Logging in....")
@@ -162,6 +199,14 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
+    private fun loginWithFacebook(token: AccessToken){
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                val currentUser: FirebaseUser? = task.result.user
+                updateUI(currentUser?.uid!!)
+            }
+    }
     override fun onStart() {
         super.onStart()
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -169,7 +214,13 @@ class LoginActivity : AppCompatActivity() {
             updateUI(currentUser.uid)
         }
     }
+
+
+
     companion object {
         const val LOGIN_ACTIVITY = ".LoginActivity"
+        const val TAG = ".SignInGoogle"
+        const val EMAIL = "email"
     }
+
 }

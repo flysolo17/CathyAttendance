@@ -1,60 +1,77 @@
 package com.ketchupzzz.cathyattendance.techearUi.classroom.tabs
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.ketchupzzz.cathyattendance.R
+import com.ketchupzzz.cathyattendance.databinding.FragmentHomeTabBinding
+import com.ketchupzzz.cathyattendance.models.Announcements
+import com.ketchupzzz.cathyattendance.models.SubjectClass
+import com.ketchupzzz.cathyattendance.techearUi.adapter.AnnouncementAdapter
+import com.ketchupzzz.cathyattendance.techearUi.classroom.ClassroomFragment
+import com.ketchupzzz.cathyattendance.techearUi.classroom.CreateAnnouncementFragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeTabFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeTabFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var binding : FragmentHomeTabBinding
+    private lateinit var announcementAdapter: AnnouncementAdapter
+    private lateinit var announcementList: MutableList<Announcements>
+    private lateinit var firestore: FirebaseFirestore
+    private fun init(){
+        firestore = FirebaseFirestore.getInstance()
+        binding.recyclerviewAnnouncements.layoutManager = LinearLayoutManager(binding.root.context)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_tab, container, false)
+    ): View {
+        binding = FragmentHomeTabBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeTabFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeTabFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+        binding.fabCreateAnnouncements.setOnClickListener{
+            val createAnnouncementFragment = CreateAnnouncementFragment()
+            if (!createAnnouncementFragment.isAdded) {
+                createAnnouncementFragment.show(childFragmentManager,"Create Announcements")
+            }
+        }
+        getAllAnnouncements()
+    }
+    fun getAllAnnouncements(){
+        announcementList = mutableListOf()
+        firestore.collection(SubjectClass.TABLE_NAME).document(ClassroomFragment.subjectClass?.classID!!)
+            .collection(Announcements.TABLE_NAME)
+            .orderBy(Announcements.TIMESTAMP,Query.Direction.DESCENDING)
+            .addSnapshotListener { value, error ->
+                announcementList.clear()
+                if (error != null) {
+                    Log.d(TAG, error.message.toString())
+                }
+                if (value != null) {
+                    for (documents in value.documents) {
+                        val announcements = documents.toObject(Announcements::class.java)
+                        if (announcements != null) {
+                            announcementList.add(announcements)
+                        }
+                    }
+                    announcementAdapter = AnnouncementAdapter(binding.root.context,announcementList)
+                    binding.recyclerviewAnnouncements.adapter = announcementAdapter
                 }
             }
     }
+    companion object {
+        const val  TAG = ".HomeTabFragment"
+    }
+
 }

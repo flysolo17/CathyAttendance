@@ -40,9 +40,7 @@ class TeacherMainScreen : AppCompatActivity() {
                 R.id.nav_home -> {
                     showBottomNav()
                 }
-                R.id.nav_profile -> {
-                    showBottomNav()
-                }
+
                 else -> {
                     hideBottomNav()
                 }
@@ -52,6 +50,8 @@ class TeacherMainScreen : AppCompatActivity() {
 
     private fun showBottomNav() {
         binding.bottomAppBar.performShow(true)
+        binding.bottomAppBar.hideOnScroll = true
+
         binding.floatingActionButton.show()
     }
     private fun hideBottomNav() {

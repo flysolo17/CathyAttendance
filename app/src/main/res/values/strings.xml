@@ -21,4 +21,19 @@
     <string name="save">Save</string>
     <string name="sorry_this_page_is_under_development">Sorry, this page is under development</string>
     <string name="class_students">Class Students</string>
+    <string name="add_announcement">Add Announcement</string>
+    <string name="announcements">Announcements</string>
+    <string name="create_an_announcement">Create an announcement</string>
+    <string name="announcement">Announcement</string>
+    <string name="teacher_s_name">Teacher\'s name</string>
+
+    <string name="web_client_id">144804628673-vh3o6chnesbe2hru14ssgqqqricv1lg0.apps.googleusercontent.com</string>
+
+
+    <string name="facebook_app_id">483727876598124</string>
+    <string name="fb_login_protocol_scheme">fb483727876598124</string>
+    <string name="facebook_client_token">aaed8f6de7bc42fead58e0de2471f6ee</string>
+    <string name="user_email">User email</string>
+
+
 </resources>
