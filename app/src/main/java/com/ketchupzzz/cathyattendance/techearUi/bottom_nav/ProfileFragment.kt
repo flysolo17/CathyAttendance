@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -19,8 +20,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ketchupzzz.cathyattendance.databinding.FragmentProfileBinding
+import com.ketchupzzz.cathyattendance.dialogs.ChangePasswordDialog
+import com.ketchupzzz.cathyattendance.dialogs.EditProfileDialog
 import com.ketchupzzz.cathyattendance.loginsystem.LoginActivity
 import com.ketchupzzz.cathyattendance.models.Users
+import com.ketchupzzz.cathyattendance.techearUi.TeacherMainScreen
+import com.ketchupzzz.cathyattendance.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 
 
@@ -28,9 +33,11 @@ class ProfileFragment : Fragment() {
     private lateinit var binding : FragmentProfileBinding
     private lateinit var callbackManager: CallbackManager
     private lateinit var firestore : FirebaseFirestore
-    private fun init(myID: String) {
+    private lateinit var userViewModel: UserViewModel
+    private  var users: Users? = null
+    private fun init() {
         firestore = FirebaseFirestore.getInstance()
-        bindViews(myID)
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -44,7 +51,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init(FirebaseAuth.getInstance().currentUser?.uid!!)
+        init()
         binding.buttonLogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
@@ -66,29 +73,56 @@ class ProfileFragment : Fragment() {
             }
         })
         binding.loginButton.setOnClickListener{
-
             LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
+        }
+        binding.buttonEditProfile.setOnClickListener {
+            if (users != null) {
+                userViewModel.setUser(users!!)
+                val editProfileDialog = EditProfileDialog()
+                if (!editProfileDialog.isAdded) {
+                    editProfileDialog.show(parentFragmentManager,"Edit Profile")
+                }
+            }
+        }
+        binding.buttonChangePassword.setOnClickListener {
+            val changePasswordDialog = ChangePasswordDialog()
+            if (!changePasswordDialog.isAdded) {
+                changePasswordDialog.show(parentFragmentManager,"Change Password")
+
+            }
         }
     }
 
-    private fun bindViews(myID: String) {
+    private fun getUserInfo(myID: String) {
         firestore.collection(Users.TABLE_NAME)
             .document(myID)
-            .get().addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val user = document.toObject(Users::class.java)
-                    if (user != null) {
-                        if (user.userProfile.isNotEmpty()) {
-                            Picasso.get().load(user.userProfile).into(binding.imageUserProfile)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Toast.makeText(view?.context,"error: ${error.message}",Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    if (value != null) {
+                        if (value.exists()) {
+                            val user = value.toObject(Users::class.java)
+                            if (user != null) {
+                                users = user
+                                bindViews(users!!)
+                            }
                         }
-                        val fullname = user.firstname + " " + user.middleName + " " + user.lastname
-                        binding.textUserFullname.text = fullname
-                        binding.textUserEmail.text = user.email
-                        binding.textUserID.text = user.idNumber
-                        binding.textUsertype.text = user.userType
                     }
                 }
             }
+    }
+
+    private fun bindViews(user: Users){
+        if (user.userProfile.isNotEmpty()) {
+            Picasso.get().load(user.userProfile).into(binding.imageUserProfile)
+        }
+        val fullName = user.firstname + " " + user.middleName + " " + user.lastname
+        binding.textUserFullname.text = fullName
+        binding.textUserEmail.text = user.email
+        binding.textUserID.text = user.idNumber
+        binding.textUsertype.text = user.userType
     }
     private fun linkWithFacebook(token : AccessToken) {
         val credential = FacebookAuthProvider.getCredential(token.token)
@@ -104,5 +138,10 @@ class ProfileFragment : Fragment() {
     }
     companion object {
         const val TAG = ".ProfileFragment"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getUserInfo(FirebaseAuth.getInstance().currentUser!!.uid)
     }
 }

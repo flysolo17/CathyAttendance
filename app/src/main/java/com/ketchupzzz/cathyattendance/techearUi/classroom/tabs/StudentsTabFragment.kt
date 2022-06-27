@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.ketchupzzz.cathyattendance.databinding.FragmentStudentsTabBinding
+import com.ketchupzzz.cathyattendance.models.Invitations
 import com.ketchupzzz.cathyattendance.models.Students
 import com.ketchupzzz.cathyattendance.models.SubjectClass
 import com.ketchupzzz.cathyattendance.models.Users
@@ -28,6 +29,7 @@ class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.Stu
     private lateinit var firestore: FirebaseFirestore
     private lateinit var usersList: MutableList<Users>
     private lateinit var classStudents: MutableList<Students>
+
     private fun init() {
         firestore = FirebaseFirestore.getInstance()
         binding.recyclerviewInviteStudents.apply {
@@ -68,9 +70,7 @@ class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.Stu
                     for (document in value) {
                         if (document != null) {
                             val student = document.toObject(Students::class.java)
-                            if (student.studentStatus == 1) {
-                                classStudents.add(student)
-                            }
+                            classStudents.add(student)
                         }
                     }
 
@@ -96,14 +96,14 @@ class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.Stu
                     for (documentSnapshot in value) {
                         if (documentSnapshot != null) {
                             val users: Users = documentSnapshot.toObject(Users::class.java)
-                            usersList.add(users)
-                            for (students in studentList) {
-                                 if (students.studentID.equals(users.userID)) {
-                                     if (students.studentStatus == 1) {
-                                         usersList.remove(users)
-                                     }
-                                 }
-                             }
+                            if (!users.userType.equals("Teacher")){
+                                usersList.add(users)
+                                studentList.map { students ->
+                                    if (students.studentID.equals(users.userID) ) {
+                                        usersList.remove(users)
+                                    }
+                                }
+                            }
                         }
                     }
                     usersAdapter = UsersAdapter(binding.root.context,usersList,this)
@@ -115,43 +115,57 @@ class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.Stu
         const val TAG = ".StudentsTabFragment"
     }
 
-    private fun inviteStudent(classID : String ,student : Students) {
-        firestore.collection(SubjectClass.TABLE_NAME)
-            .document(classID)
-            .collection(Students.TABLE_NAME)
-            .document(student.studentID!!)
-            .set(student)
-            .addOnCompleteListener { task ->
+    private fun inviteStudent(invitations: Invitations) {
+        firestore.collection(Users.TABLE_NAME)
+            .document(invitations.studentID!!)
+            .collection(Invitations.TABLE_NAME)
+            .document(invitations.classID!!)
+            .set(invitations)
+            .addOnCompleteListener {task ->
                 if (task.isSuccessful) {
                     Toast.makeText(binding.root.context, "Invitation Success",Toast.LENGTH_SHORT).show()
                 }else {
                     Toast.makeText(binding.root.context, "Invitation Failed",Toast.LENGTH_SHORT).show()
                 }
             }
+
     }
 
     override fun inviteUser(position: Int) {
         val users = usersList[position]
-        val student = Students(users.userID,0)
-        inviteStudent(ClassroomFragment.subjectClass?.classID!!,student)
+        val classID = ClassroomFragment.subjectClass?.classID!!
+        val invitations = Invitations(classID,users.userID)
+        inviteStudent(invitations)
     }
 
     override fun cancelInvitation(position: Int) {
-        removeStudentFromClass(ClassroomFragment.subjectClass?.classID!!,
-            usersList[position].userID!!,0
-        )
+        cancelMyInvitation(position)
     }
 
     override fun removeFromClass(position: Int) {
-        removeStudentFromClass(ClassroomFragment.subjectClass?.classID!!,
+      /*  removeStudentFromClass(ClassroomFragment.subjectClass?.classID!!,
             classStudents[position].studentID!!,
-        1)
+        1)*/
     }
 
-    /**
+    private fun cancelMyInvitation(position : Int) {
+        firestore.collection(Users.TABLE_NAME)
+            .document(usersList[position].userID!!)
+            .collection(Invitations.TABLE_NAME)
+            .document(ClassroomFragment.subjectClass?.classID!!)
+            .delete()
+            .addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    Toast.makeText(view?.context,"Invitation Cancelled!",Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(view?.context,"Error: Canceling invitation",Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+/*    *//**
      * TODO remove student from class and cancel Invitation
      * status: 1 for remove from class 0 for cancel inviation
-     */
+     *//*
     private fun removeStudentFromClass(classID : String,studentID : String,status : Int) {
         firestore.collection(SubjectClass.TABLE_NAME)
             .document(classID)
@@ -170,6 +184,6 @@ class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.Stu
                     Toast.makeText(binding.root.context,"Student failed to remove!" ,Toast.LENGTH_SHORT).show()
                 }
             }
-    }
+    }*/
 
 }

@@ -10,8 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ketchupzzz.cathyattendance.R
-import com.ketchupzzz.cathyattendance.models.Students
-import com.ketchupzzz.cathyattendance.models.SubjectClass
+import com.ketchupzzz.cathyattendance.models.Invitations
 import com.ketchupzzz.cathyattendance.models.Users
 import com.ketchupzzz.cathyattendance.techearUi.classroom.ClassroomFragment
 import com.squareup.picasso.Picasso
@@ -34,7 +33,7 @@ class UsersAdapter(val context: Context, private val studentsList : List<Users>,
         }
         val fullname = students.firstname + " " + students.middleName + " " + students.lastname
         holder.textStudentsFullname.text = fullname
-        holder.textStatus.text = "To invite"
+        holder.textUserID.text = students.idNumber
         holder.buttonInvite.setOnClickListener {
             onUserClick.inviteUser(position)
         }
@@ -50,30 +49,33 @@ class UsersAdapter(val context: Context, private val studentsList : List<Users>,
     class StudentsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageStudentsProfile : ImageView = itemView.findViewById(R.id.imageStudentProfile)
         val textStudentsFullname : TextView = itemView.findViewById(R.id.textStudentsName)
-        val textStatus : TextView = itemView.findViewById(R.id.textStatus)
+        val textUserID : TextView = itemView.findViewById(R.id.textUserID)
         val buttonInvite : Button = itemView.findViewById(R.id.buttonInvite)
         val buttonCancel : Button = itemView.findViewById(R.id.buttonCancelInvite)
         val firestore = FirebaseFirestore.getInstance()
         fun bindButtons(studentID : String) {
             firestore
-                .collection(SubjectClass.TABLE_NAME)
-                .document(ClassroomFragment.subjectClass?.classID!!)
-                .collection(Students.TABLE_NAME)
+                .collection(Users.TABLE_NAME)
                 .document(studentID)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val students = document.toObject(Students::class.java)
-                        if (students?.studentID.equals(studentID)) {
-                            buttonInvite.visibility = View.GONE
-                            buttonCancel.visibility = View.VISIBLE
-                        } else {
-                            buttonInvite.visibility = View.VISIBLE
-                            buttonCancel.visibility = View.GONE
+                .collection(Invitations.TABLE_NAME)
+                .document(ClassroomFragment.subjectClass?.classID!!)
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        error.printStackTrace()
+                    } else {
+                        if (value != null) {
+                            if (value.exists()) {
+                                buttonInvite.visibility = View.GONE
+                                buttonCancel.visibility = View.VISIBLE
+                            } else {
+                                buttonInvite.visibility = View.VISIBLE
+                                buttonCancel.visibility = View.GONE
+
+                            }
                         }
                     }
-
                 }
         }
     }
+
 }

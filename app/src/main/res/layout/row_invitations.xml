@@ -2,52 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
     android:orientation="horizontal">
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageStudentProfile"
+        android:id="@+id/imageTeacherProfile"
         android:layout_width="50dp"
         android:scaleType="centerCrop"
         android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:src="@drawable/ic_profile"
         app:civ_border_color="#FF000000"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="5dp">
         <TextView
-            android:id="@+id/textStudentsName"
+            android:id="@+id/textTeachersName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Students fullname"
-            android:textSize="16sp"
+            android:text="Teacher Name"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/textInvitationContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="invited you to join Sample subject 001"
+            android:fontFamily="@font/poppins_light"
             android:textColor="@color/black"
-            android:fontFamily="@font/poppins_medium"/>
-        <TextView
-            android:id="@+id/textUserID"
+            />
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="User ID"
-            android:fontFamily="@font/poppins_light"/>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonInvite"
-                android:text="Invite"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:id="@+id/buttonCancelInvite"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-        </FrameLayout>
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/buttonReject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:backgroundTint="#F44336"
+                android:text="Reject" />
+
+            <Button
+                android:id="@+id/buttonAccept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:backgroundTint="#3F51B5"
+                android:text="Accept" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_students"
+    app:startDestination="@id/nav_my_class">
+
+    <fragment
+        android:id="@+id/nav_my_class"
+        android:name="com.ketchupzzz.cathyattendance.studentUI.bottom_nav.MyClasses"
+        android:label="fragment_my_classes"
+        tools:layout="@layout/fragment_my_classes" />
+    <fragment
+        android:id="@+id/nav_notification"
+        android:name="com.ketchupzzz.cathyattendance.studentUI.bottom_nav.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/nav_search_class"
+        android:name="com.ketchupzzz.cathyattendance.studentUI.bottom_nav.SearchClassFragment"
+        android:label="fragment_search_class"
+        tools:layout="@layout/fragment_search_class" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.ketchupzzz.cathyattendance.techearUi.bottom_nav.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

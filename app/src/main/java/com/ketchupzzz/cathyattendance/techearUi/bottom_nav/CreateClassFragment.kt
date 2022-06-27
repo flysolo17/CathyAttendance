@@ -33,7 +33,6 @@ class CreateClassFragment : Fragment() {
 
     private var classPicture : Uri? = null
     private lateinit var firestore : FirebaseFirestore
-
     private var galleryLauncher: ActivityResultLauncher<Intent>? = null
     private var permissionLauncher: ActivityResultLauncher<String>? = null
     private var storage: StorageReference? = null
@@ -45,7 +44,7 @@ class CreateClassFragment : Fragment() {
         myID = FirebaseAuth.getInstance().currentUser!!.uid
         progressDialog = ProgressDialog(requireActivity())
 
-        storage = FirebaseStorage.getInstance().getReference("$myID/images")
+        storage = FirebaseStorage.getInstance().getReference("$myID/classImages")
     }
     private lateinit var progressDialog: ProgressDialog
     override fun onCreateView(

@@ -34,6 +34,15 @@
     <string name="fb_login_protocol_scheme">fb483727876598124</string>
     <string name="facebook_client_token">aaed8f6de7bc42fead58e0de2471f6ee</string>
     <string name="user_email">User email</string>
+    <string name="old_password">Old Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="new_password">New Password</string>
+    <string name="schedules">Schedules</string>
+    <string name="class_picture">Class Picture</string>
+    <string name="share_class_code">Share class code</string>
+    <string name="add_schedules">Add Schedules</string>
+    <string name="invitations">Invitations</string>
+    <string name="other_classes">Other Classes</string>
 
 
 </resources>

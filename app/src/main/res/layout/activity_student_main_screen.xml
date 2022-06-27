@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:layout_height="match_parent"
     tools:context=".studentUI.StudentMainScreen">
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="250dp"
-        android:background="@drawable/under_development"/>
-    <TextView
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentStudentsUIContainer"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_students"
+        />
+    <com.google.android.material.bottomappbar.BottomAppBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_medium"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:gravity="center"
-        android:text="Sorry, this page is under development"/>
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Logout"
-        />
-</LinearLayout>
+        android:layout_gravity="bottom"
+        app:hideOnScroll="true"
+        android:id="@+id/bottomAppBar">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/studentsNav"
+            android:layout_marginEnd="16dp"
+            app:menu="@menu/students_bottom_nav"
+            android:background="@drawable/ic_shape"/>
+    </com.google.android.material.bottomappbar.BottomAppBar>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

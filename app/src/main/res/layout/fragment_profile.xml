@@ -4,55 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="#FFC600"
     android:orientation="vertical"
     tools:context=".techearUi.bottom_nav.ProfileFragment">
-
-    <com.google.android.material.card.MaterialCardView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:backgroundTint="#F6E298"
-        app:cardCornerRadius="10dp">
+        android:padding="20dp">
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageUserProfile"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="5dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_profile"
-                app:civ_border_color="#FF000000" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/card20"
+                android:paddingTop="40dp"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textUserFullname"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="User Full Name"
-
                     android:textColor="@color/black"
                     android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textUsertype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="User type"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textUserEmail"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
                     android:text="@string/user_email"
@@ -60,21 +49,13 @@
 
                 <TextView
                     android:id="@+id/textUserID"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
-
                     android:text="User ID"
                     android:textColor="@color/black" />
 
-                <TextView
-                    android:id="@+id/textUsertype"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_light"
-                    android:text="User type"
 
-                    android:textColor="@color/black" />
 
                 <com.facebook.login.widget.LoginButton xmlns:facebook="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/login_button"
@@ -84,9 +65,17 @@
                     facebook:com_facebook_login_text="Connect with facebook"
                     facebook:com_facebook_logout_text="Disconnect" />
             </LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageUserProfile"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@color/black"
+            app:civ_border_color="#FF000000" />
+    </FrameLayout>
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 
 
 
@@ -110,6 +99,7 @@
             android:textColor="@color/black" />
 
         <Button
+            android:id="@+id/buttonChangePassword"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,7 +110,9 @@
             android:textAllCaps="false"
             android:textColor="@color/black" />
 
+
         <Button
+
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
