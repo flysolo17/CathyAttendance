@@ -26,6 +26,11 @@ class SubjectClassAdapter(val context: Context, private val classList: List<Subj
         val subjectClass = classList[position]
         holder.textClassTitle.text = subjectClass.classTitle
         holder.textClassDesc.text = subjectClass.classDesc
+        if (subjectClass.open == true) {
+            holder.textClassStatus.text = "Available for enrollment"
+        } else {
+            holder.textClassStatus.text = "Not available for enrollment"
+        }
         if (subjectClass.classProfile!!.isNotEmpty()) {
             Picasso.get().load(subjectClass.classProfile).placeholder(R.drawable.teaching).into(holder.imageClass)
         }
@@ -40,6 +45,7 @@ class SubjectClassAdapter(val context: Context, private val classList: List<Subj
     class SubjectClassViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textClassTitle : TextView = itemView.findViewById(R.id.textClassTitle)
         val textClassDesc: TextView = itemView.findViewById(R.id.textClasDesc)
+        val textClassStatus: TextView = itemView.findViewById(R.id.textClassStatus)
         val imageClass : ImageView = itemView.findViewById(R.id.imageClass)
     }
 }

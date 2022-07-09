@@ -5,55 +5,97 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.firestore.FirebaseFirestore
 import com.ketchupzzz.cathyattendance.R
+import com.ketchupzzz.cathyattendance.databinding.FragmentAttendanceBinding
+import com.ketchupzzz.cathyattendance.models.Attendance
+import com.ketchupzzz.cathyattendance.models.SubjectClass
+import com.ketchupzzz.cathyattendance.techearUi.adapter.AttendanceAdapter
+import com.ketchupzzz.cathyattendance.techearUi.classroom.ClassroomFragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AttendanceFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AttendanceFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var binding : FragmentAttendanceBinding
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var attendanceAdapter: AttendanceAdapter
+    private lateinit var attendanceList: MutableList<Attendance>
+
+    private fun init(subjectID: String) {
+        firestore = FirebaseFirestore.getInstance()
+        binding.recyclerviewAttendance.layoutManager = LinearLayoutManager(binding.root.context)
+        getAllAttendance(subjectID)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_attendance, container, false)
+        binding = FragmentAttendanceBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AttendanceFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AttendanceFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init(ClassroomFragment.subjectClass?.classID!!)
+        binding.fabCreateAttendance.setOnClickListener {
+            showCreateAttendanceDialog(view)
+        }
+    }
+    private fun showCreateAttendanceDialog(view: View) {
+        val view : View = LayoutInflater.from(view.context).inflate(R.layout.dialog_create_attendance,binding.root,false)
+        MaterialAlertDialogBuilder(view.context)
+            .setView(view)
+            .setPositiveButton("Create") { dialog, _ ->
+                val note : EditText = view.findViewById(R.id.inputNote)
+                if (note.text.toString().isNotEmpty()) {
+                    val classID = ClassroomFragment.subjectClass!!.classID!!
+                    val  attendanceID = firestore.collection(SubjectClass.TABLE_NAME).document(classID).collection(Attendance.TABLE_NAME).document().id
+                    val attendance = Attendance(attendanceID,note.text.toString())
+                    createAttendance(attendance,classID)
+                } else {
+                    Toast.makeText(view.context,"Cancelled!",Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel") { dialog , _ ->
+                dialog.dismiss()
+            }.show()
+    }
+    private fun createAttendance(attendance: Attendance, subjectID : String) {
+        firestore.collection(SubjectClass.TABLE_NAME)
+            .document(subjectID)
+            .collection(Attendance.TABLE_NAME)
+            .document(attendance.attendanceID!!)
+            .set(attendance)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(binding.root.context,"Attendance Created!",Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(binding.root.context,"Attendance Creation Failed!",Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+    private fun getAllAttendance(subjectID : String){
+        attendanceList = mutableListOf()
+        firestore.collection(SubjectClass.TABLE_NAME)
+            .document(subjectID)
+            .collection(Attendance.TABLE_NAME)
+            .addSnapshotListener { value, error ->
+                attendanceList.clear()
+                if (error != null) {
+                    error.printStackTrace()
+                } else {
+                    value?.map { queryDocumentSnapshot ->
+                        val attendance = queryDocumentSnapshot.toObject(Attendance::class.java)
+                        attendanceList.add(attendance)
+                    }
+                    attendanceAdapter = AttendanceAdapter(binding.root.context,attendanceList)
+                    binding.recyclerviewAttendance.adapter = attendanceAdapter
                 }
             }
     }

@@ -26,6 +26,7 @@ class StudentClassesAdapter(val context: Context, private val classList: List<Su
         val subjectClass = classList[position]
         holder.textClassTitle.text = subjectClass.classTitle
         holder.textClassDesc.text = subjectClass.classDesc
+        holder.textClassStatus.visibility = View.GONE
         if (subjectClass.classProfile!!.isNotEmpty()) {
             Picasso.get().load(subjectClass.classProfile).placeholder(R.drawable.teaching).into(holder.imageClass)
         }
@@ -41,6 +42,7 @@ class StudentClassesAdapter(val context: Context, private val classList: List<Su
         val textClassTitle : TextView = itemView.findViewById(R.id.textClassTitle)
         val textClassDesc: TextView = itemView.findViewById(R.id.textClasDesc)
         val imageClass : ImageView = itemView.findViewById(R.id.imageClass)
+        val textClassStatus: TextView = itemView.findViewById(R.id.textClassStatus)
     }
 
 }

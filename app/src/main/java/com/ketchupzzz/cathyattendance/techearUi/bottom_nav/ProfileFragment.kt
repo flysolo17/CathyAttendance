@@ -1,5 +1,6 @@
 package com.ketchupzzz.cathyattendance.techearUi.bottom_nav
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.NonNull
@@ -14,6 +15,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -53,28 +55,34 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         binding.buttonLogout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(requireActivity(), LoginActivity::class.java))
+            MaterialAlertDialogBuilder(view.context)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to log out.")
+                .setNegativeButton("Cancel") { dialog, i ->
+                    dialog.dismiss()
+                }.setPositiveButton("Logout") { _, _ ->
+                    FirebaseAuth.getInstance().signOut()
+                    startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                }.show()
+
         }
         // Callback registration
         binding.loginButton.setFragment(this)
         callbackManager = CallbackManager.Factory.create() //initialize callback manager
         binding.loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
-                linkWithFacebook(result.accessToken!!)
+                linkWithFacebook(result.accessToken)
             }
 
             override fun onCancel() {
-                Toast.makeText(view.context ?: requireContext(),"cancel",Toast.LENGTH_SHORT).show()
+                Toast.makeText(view.context,"cancel",Toast.LENGTH_SHORT).show()
             }
 
             override fun onError(exception: FacebookException) {
-                Toast.makeText(view.context ?: requireContext(),exception.message.toString(),Toast.LENGTH_SHORT).show()
+                exception.printStackTrace()
             }
         })
-        binding.loginButton.setOnClickListener{
-            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
-        }
+
         binding.buttonEditProfile.setOnClickListener {
             if (users != null) {
                 userViewModel.setUser(users!!)
@@ -98,7 +106,7 @@ class ProfileFragment : Fragment() {
             .document(myID)
             .addSnapshotListener { value, error ->
                 if (error != null) {
-                    Toast.makeText(view?.context,"error: ${error.message}",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(binding.root.context,"error: ${error.message}",Toast.LENGTH_SHORT).show()
                 }
                 else {
                     if (value != null) {

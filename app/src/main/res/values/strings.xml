@@ -43,6 +43,15 @@
     <string name="add_schedules">Add Schedules</string>
     <string name="invitations">Invitations</string>
     <string name="other_classes">Other Classes</string>
+    <string name="fonts_are_an_important_part_of_your_site_typography_fonts_that_are_too_fancy_can_be_hard_to_read_while_too_plain_ones_can_be_outright_boring_that_s_why_you_should_focus_on_choosing_a_font_that_s_legible_yet_appealing">Fonts are an important part of your site typography. Fonts that are too fancy can be hard to read, while too plain ones can be outright boring. That’s why you should focus on choosing a font that’s legible yet appealing.</string>
+    <string name="june_4_2023">June 4, 2023</string>
+    <string name="accept_students">Accept Students</string>
+    <string name="view">View</string>
+    <string name="take">Take</string>
+    <string name="student_s_fullname">Student\'s Fullname</string>
+    <string name="timestamp">Timestamp</string>
+    <string name="date">Date</string>
+    <string name="no_attendees_yet">No Attendees yet!</string>
 
 
 </resources>

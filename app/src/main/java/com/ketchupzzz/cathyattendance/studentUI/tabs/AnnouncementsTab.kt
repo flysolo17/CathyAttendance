@@ -1,4 +1,4 @@
-package com.ketchupzzz.cathyattendance.techearUi.classroom.tabs
+package com.ketchupzzz.cathyattendance.studentUI.tabs
 
 import android.os.Bundle
 import android.util.Log
@@ -7,21 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.ketchupzzz.cathyattendance.R
-import com.ketchupzzz.cathyattendance.databinding.FragmentHomeTabBinding
+import com.ketchupzzz.cathyattendance.databinding.FragmentAnnouncementsTabBinding
 import com.ketchupzzz.cathyattendance.models.Announcements
 import com.ketchupzzz.cathyattendance.models.SubjectClass
+import com.ketchupzzz.cathyattendance.studentUI.classroom.StudentClassroomFragment
 import com.ketchupzzz.cathyattendance.techearUi.adapter.AnnouncementAdapter
 import com.ketchupzzz.cathyattendance.techearUi.classroom.ClassroomFragment
-import com.ketchupzzz.cathyattendance.techearUi.classroom.CreateAnnouncementFragment
+import com.ketchupzzz.cathyattendance.techearUi.classroom.tabs.HomeTabFragment
 
 
-class HomeTabFragment : Fragment() {
-
-    private lateinit var binding : FragmentHomeTabBinding
+class AnnouncementsTab : Fragment() {
+    private lateinit var binding : FragmentAnnouncementsTabBinding
     private lateinit var announcementAdapter: AnnouncementAdapter
     private lateinit var announcementList: MutableList<Announcements>
     private lateinit var firestore: FirebaseFirestore
@@ -33,30 +32,25 @@ class HomeTabFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeTabBinding.inflate(inflater,container,false)
+        // Inflate the layout for this fragment
+        binding = FragmentAnnouncementsTabBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        binding.fabCreateAnnouncements.setOnClickListener{
-            val createAnnouncementFragment = CreateAnnouncementFragment()
-            if (!createAnnouncementFragment.isAdded) {
-                createAnnouncementFragment.show(childFragmentManager,"Create Announcements")
-            }
-        }
         getAllAnnouncements()
     }
     private fun getAllAnnouncements(){
         announcementList = mutableListOf()
-        firestore.collection(SubjectClass.TABLE_NAME).document(ClassroomFragment.subjectClass?.classID!!)
+        firestore.collection(SubjectClass.TABLE_NAME).document(StudentClassroomFragment.subjectClass?.classID!!)
             .collection(Announcements.TABLE_NAME)
-            .orderBy(Announcements.TIMESTAMP,Query.Direction.DESCENDING)
+            .orderBy(Announcements.TIMESTAMP, Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
                 announcementList.clear()
                 if (error != null) {
-                    Log.d(TAG, error.message.toString())
+                    Log.d(HomeTabFragment.TAG, error.message.toString())
                 }
                 if (value != null) {
                     for (documents in value.documents) {
@@ -70,8 +64,4 @@ class HomeTabFragment : Fragment() {
                 }
             }
     }
-    companion object {
-        const val  TAG = ".HomeTabFragment"
-    }
-
 }

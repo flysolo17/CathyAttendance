@@ -3,48 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
     android:layout_margin="5dp"
-    >
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/imageAttendee"
+            android:background="@color/black"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/imageClass"
-            android:scaleType="centerCrop"
-            android:background="@drawable/teaching"/>
+            android:contentDescription="@string/class_picture" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="5dp">
+            android:padding="5dp">
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:text="@string/computer_programming_ictoo1_ict002"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textColor="@color/black"
-                    android:id="@+id/textClassTitle"
-                    android:textSize="16sp"/>
-            <TextView
+                android:id="@+id/textStudentsFullname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/computer_programming_ictoo1_ict002"
-                android:fontFamily="@font/poppins_light"
-                android:textColor="@color/black"
-                android:id="@+id/textClasDesc"
-                />
+                android:text="@string/student_s_fullname"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/black"/>
+
             <TextView
+                android:id="@+id/textTimestamp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Status"
+                android:text="@string/timestamp"
+                android:textSize="16sp"
                 android:fontFamily="@font/poppins_light"
-                android:textColor="@color/black"
-                android:id="@+id/textClassStatus"
-                />
+                android:textColor="@color/black"/>
         </LinearLayout>
     </LinearLayout>
+
 </com.google.android.material.card.MaterialCardView>

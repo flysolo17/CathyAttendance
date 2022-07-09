@@ -16,7 +16,7 @@ import com.ketchupzzz.cathyattendance.models.Users
 import com.squareup.picasso.Picasso
 
 
-class InvitationAdapter(val context: Context,val invitationsList : List<Invitations>,val invitationClicks: InvitationClicks) : RecyclerView.Adapter<InvitationAdapter.InvitationViewHolder>() {
+class InvitationAdapter(val context: Context, private val invitationsList : List<Invitations>, private val invitationClicks: InvitationClicks) : RecyclerView.Adapter<InvitationAdapter.InvitationViewHolder>() {
 
     interface InvitationClicks{
         fun accept(position: Int)

@@ -143,9 +143,12 @@ class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.Stu
     }
 
     override fun removeFromClass(position: Int) {
-      /*  removeStudentFromClass(ClassroomFragment.subjectClass?.classID!!,
-            classStudents[position].studentID!!,
-        1)*/
+        val classID = ClassroomFragment.subjectClass!!.classID
+        removeStudentFromClass(classID!!, classStudents[position].studentID!!)
+    }
+
+    override fun onStudentClick(position: Int) {
+        TODO("Not yet implemented")
     }
 
     private fun cancelMyInvitation(position : Int) {
@@ -162,28 +165,19 @@ class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.Stu
                 }
             }
     }
-/*    *//**
-     * TODO remove student from class and cancel Invitation
-     * status: 1 for remove from class 0 for cancel inviation
-     *//*
-    private fun removeStudentFromClass(classID : String,studentID : String,status : Int) {
+
+    private fun removeStudentFromClass(classroomID: String,studentID : String) {
         firestore.collection(SubjectClass.TABLE_NAME)
-            .document(classID)
+            .document(classroomID)
             .collection(Students.TABLE_NAME)
             .document(studentID)
             .delete()
             .addOnCompleteListener { task ->
-                if (task .isSuccessful) {
-                    if (status == 1) {
-                        Toast.makeText(binding.root.context,"Student removed!" ,Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(binding.root.context,"Invitation cancelled!" ,Toast.LENGTH_SHORT).show()
-                    }
-
+                if (task.isSuccessful) {
+                    Toast.makeText(binding.root.context,"Student removed!",Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(binding.root.context,"Student failed to remove!" ,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(binding.root.context,"Failed to remove student",Toast.LENGTH_SHORT).show()
                 }
             }
-    }*/
-
+    }
 }

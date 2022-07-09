@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="10dp"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
@@ -69,25 +68,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:clickable="true"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:focusable="true">
-        <TextView
-            android:layout_width="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/textCommentCounter"
-            android:fontFamily="@font/poppins_light"
+            android:text="Like"
+            android:layout_weight="1"
+            android:id="@+id/buttonViewAttendees"
             android:textColor="@color/black"
-            android:layout_marginEnd="5dp"/>
-        <TextView
-            android:layout_width="wrap_content"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/ic_document"
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/black"/>
+        <Button
+            android:id="@+id/buttonTakeAttendance"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Comments"
+            android:layout_weight="1"
             android:textColor="@color/black"
-            android:fontFamily="@font/poppins_light"
-            android:text="comments"/>
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/ic_camera"
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
     </LinearLayout>
 
 

@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso
 class StudentsAdapter(val context: Context, private val studentsList: List<Students>,private val studentsClickListener: StudentsClickListener) : RecyclerView.Adapter<StudentsAdapter.StudentsViewHolder>() {
     interface StudentsClickListener {
         fun removeFromClass(position: Int)
+        fun onStudentClick(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentsViewHolder {
@@ -29,6 +30,9 @@ class StudentsAdapter(val context: Context, private val studentsList: List<Stude
         holder.buttonRemove.setOnClickListener {
             studentsClickListener.removeFromClass(position)
         }
+        holder.itemView.setOnClickListener {
+            studentsClickListener.onStudentClick(position)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -37,6 +41,7 @@ class StudentsAdapter(val context: Context, private val studentsList: List<Stude
     class StudentsViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         private val imageStudentProfile : ImageView = itemView.findViewById(R.id.imageStudentProfile)
         private val textStudentName : TextView = itemView.findViewById(R.id.textStudentsName)
+        private val textStudentIDNumber : TextView = itemView.findViewById(R.id.textIdNumber)
         val buttonRemove : Button = itemView.findViewById(R.id.buttonRemoveFromClass)
         private val firestore = FirebaseFirestore.getInstance()
         fun bindStudents(studentID : String) {
@@ -51,6 +56,8 @@ class StudentsAdapter(val context: Context, private val studentsList: List<Stude
                             Picasso.get().load(user.userProfile).into(imageStudentProfile)
                         }
                         textStudentName.text = "${user.firstname} ${user.middleName} ${user.lastname}"
+                        textStudentIDNumber.text = user.idNumber
+
                     }
 
                 }

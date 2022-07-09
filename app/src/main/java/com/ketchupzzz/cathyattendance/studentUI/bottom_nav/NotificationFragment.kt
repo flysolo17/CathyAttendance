@@ -28,6 +28,8 @@ class NotificationFragment : Fragment(),InvitationAdapter.InvitationClicks {
     private lateinit var invitationList : MutableList<Invitations>
     private lateinit var invitationAdapter: InvitationAdapter
     private lateinit var firestore : FirebaseFirestore
+
+
     private fun init() {
         firestore = FirebaseFirestore.getInstance()
         binding.recyclerviewInvitations.layoutManager = LinearLayoutManager(view?.context)
@@ -65,7 +67,7 @@ class NotificationFragment : Fragment(),InvitationAdapter.InvitationClicks {
                                 invitationList.add(invitations)
                             }
                         }
-                        invitationAdapter = InvitationAdapter(view?.context!!,invitationList,this)
+                        invitationAdapter = InvitationAdapter(binding.root.context,invitationList,this)
                         binding.recyclerviewInvitations.adapter = invitationAdapter
                     }
                 }
@@ -76,10 +78,7 @@ class NotificationFragment : Fragment(),InvitationAdapter.InvitationClicks {
     override fun accept(position: Int) {
         val invitations = invitationList[position]
         val students = Students(invitations.studentID,1)
-
         acceptInvite(invitations.classID!!,students)
-        deleteInvitation(invitations.classID,invitations.studentID!!)
-
     }
 
     override fun reject(position: Int) {
@@ -95,6 +94,7 @@ class NotificationFragment : Fragment(),InvitationAdapter.InvitationClicks {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(view?.context,"You successfully joined the class",Toast.LENGTH_SHORT).show()
+                    deleteInvitation(classID,students.studentID)
                 }
                 else {
                     Toast.makeText(view?.context,"You rejected to join the class",Toast.LENGTH_SHORT).show()

@@ -30,6 +30,9 @@
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_main.xml" value="0.25052083333333336" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_student_main_screen.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/activity_teacher_main_screen.xml" value="0.2" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/dialog_create_attendance.xml" value="0.36666666666666664" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/dialog_join_class.xml" value="0.253125" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_announcements_tab.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_attendance.xml" value="0.18854166666666666" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_change_password_dialog.xml" value="0.264" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_classes.xml" value="0.2" />
@@ -41,18 +44,26 @@
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_my_classes.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_notification.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
-        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_search_class.xml" value="0.35260416666666666" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_search_class.xml" value="0.264" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_settings.xml" value="0.25416666666666665" />
-        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_settings_tab.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_settings_tab.xml" value="0.5" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_student_attendance_tab.xml" value="0.35260416666666666" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_student_classroom.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_students.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_students_tab.xml" value="0.264" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_update_class.xml" value="0.36666666666666664" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/fragment_view_attendees.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/progress_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_anouncement.xml" value="0.36666666666666664" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_attendance.xml" value="0.36666666666666664" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_attendees.xml" value="0.365625" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_class.xml" value="0.4" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_invitations.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_schedules.xml" value="0.20052083333333334" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_student_attendance.xml" value="0.365625" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_students.xml" value="0.25416666666666665" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/row_users.xml" value="0.36666666666666664" />
+        <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/layout/view_take_attendance.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/menu/students_bottom_nav.xml" value="0.36666666666666664" />
         <entry key="..\:/projects for my resume/CathyAttendance/app/src/main/res/menu/teacher_bottom_nav.xml" value="0.25416666666666665" />
       </map>

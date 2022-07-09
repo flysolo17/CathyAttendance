@@ -21,10 +21,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.ketchupzzz.cathyattendance.R
 import com.ketchupzzz.cathyattendance.databinding.FragmentClassesBinding
 import com.ketchupzzz.cathyattendance.dialogs.ProgressDialog
-import com.ketchupzzz.cathyattendance.models.Announcements
-import com.ketchupzzz.cathyattendance.models.Students
-import com.ketchupzzz.cathyattendance.models.SubjectClass
-import com.ketchupzzz.cathyattendance.models.Users
+import com.ketchupzzz.cathyattendance.models.*
 import com.ketchupzzz.cathyattendance.techearUi.adapter.SubjectClassAdapter
 import com.squareup.picasso.Picasso
 
@@ -114,6 +111,7 @@ class ClassesFragment : Fragment(),SubjectClassAdapter.ViewClassroom {
                     .setPositiveButton("Yes") { _,_ ->
                         deleteAnnouncements(classList[position].classID!!)
                         deleteStudents(classList[position].classID!!)
+                        deleteAttendance(classList[position].classID!!)
                         deleteClass(classList[position].classID!!)
                         subjectClassAdapter.notifyItemRemoved(position)
                     }
@@ -171,6 +169,23 @@ class ClassesFragment : Fragment(),SubjectClassAdapter.ViewClassroom {
                 if (task.isSuccessful) {
                     task.result.map { snapshot ->
                         firestore.collection(SubjectClass.TABLE_NAME)
+                            .document(id)
+                            .collection(Students.TABLE_NAME)
+                            .document(snapshot.id)
+                            .delete()
+                    }
+                }
+            }
+    }
+    private fun deleteAttendance(id: String) {
+        firestore.collection(SubjectClass.TABLE_NAME)
+            .document(id)
+            .collection(Attendance.TABLE_NAME)
+            .get()
+            .addOnCompleteListener{ task ->
+                if (task.isSuccessful) {
+                    task.result.map { snapshot ->
+                        firestore.collection(Attendance.TABLE_NAME)
                             .document(id)
                             .collection(Students.TABLE_NAME)
                             .document(snapshot.id)

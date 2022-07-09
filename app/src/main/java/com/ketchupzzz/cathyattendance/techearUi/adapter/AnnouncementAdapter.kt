@@ -15,6 +15,8 @@ import com.ketchupzzz.cathyattendance.models.Announcements
 import com.ketchupzzz.cathyattendance.models.Users
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.processNextEventInCurrentThread
+import java.sql.Date
+import java.text.SimpleDateFormat
 
 class AnnouncementAdapter(val context: Context, private val announcementList: List<Announcements>) : RecyclerView.Adapter<AnnouncementAdapter.AnnouncementViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnnouncementViewHolder {
@@ -25,9 +27,8 @@ class AnnouncementAdapter(val context: Context, private val announcementList: Li
     override fun onBindViewHolder(holder: AnnouncementViewHolder, position: Int) {
         val announcements = announcementList[position]
         holder.textContent.text = announcements.announcementContent
-        holder.textCommentCounter.text = announcements.comments.size.toString()
         holder.bindWriterInfo(announcements.writerID!!)
-        holder.textTimestamp.text = announcements.timestamp.toString()
+        holder.textTimestamp.text = dateFormatter(announcements.timestamp)
     }
 
     override fun getItemCount(): Int {
@@ -39,7 +40,7 @@ class AnnouncementAdapter(val context: Context, private val announcementList: Li
         val buttonSettings : ImageButton = itemView.findViewById(R.id.buttonSettings)
         val textContent : TextView = itemView.findViewById(R.id.textContent)
         val textTimestamp : TextView = itemView.findViewById(R.id.textTimestamp)
-        val textCommentCounter : TextView = itemView.findViewById(R.id.textCommentCounter)
+
         fun bindWriterInfo(writerID : String) {
             FirebaseFirestore.getInstance().collection(Users.TABLE_NAME).document(writerID)
                 .get().addOnSuccessListener { document ->
@@ -60,5 +61,11 @@ class AnnouncementAdapter(val context: Context, private val announcementList: Li
 
                 }
         }
+    }
+    private fun dateFormatter(timestamp: Long) : String{
+        val date = Date(timestamp)
+        val simpleDateFormat = SimpleDateFormat("EE, dd-MMM-yyyy")
+        val dateTime = simpleDateFormat.format(date.time)
+        return dateTime.toString()
     }
 }

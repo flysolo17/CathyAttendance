@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,6 +19,7 @@ import com.ketchupzzz.cathyattendance.models.Students
 import com.ketchupzzz.cathyattendance.models.SubjectClass
 import com.ketchupzzz.cathyattendance.models.Users
 import com.ketchupzzz.cathyattendance.studentUI.adapter.StudentClassesAdapter
+import com.ketchupzzz.cathyattendance.techearUi.bottom_nav.ClassesFragmentDirections
 import com.squareup.picasso.Picasso
 
 
@@ -117,7 +120,8 @@ class MyClasses : Fragment(),StudentClassesAdapter.ViewClassroom {
     }
 
     override fun onClassroomClick(position: Int) {
-        Toast.makeText(binding.root.context,classList[position].classTitle,Toast.LENGTH_SHORT).show()
+        val action : NavDirections = MyClassesDirections.actionNavMyClassToStudentClassroomFragment(classList[position])
+        Navigation.findNavController(binding.root).navigate(action)
     }
 
 }
