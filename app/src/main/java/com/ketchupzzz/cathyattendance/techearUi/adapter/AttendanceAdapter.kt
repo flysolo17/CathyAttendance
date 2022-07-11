@@ -12,6 +12,7 @@ import com.ketchupzzz.cathyattendance.R
 import com.ketchupzzz.cathyattendance.models.Attendance
 import com.ketchupzzz.cathyattendance.models.SubjectClass
 import com.ketchupzzz.cathyattendance.models.Users
+import com.ketchupzzz.cathyattendance.studentUI.adapter.StudentAttendanceAdapter
 import com.ketchupzzz.cathyattendance.techearUi.classroom.ClassroomFragment
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -19,15 +20,15 @@ import java.sql.Date
 import java.text.SimpleDateFormat
 
 
-class AttendanceAdapter(val context: Context, private val attendanceList: List<Attendance>) :
+class AttendanceAdapter(val context: Context, private val attendanceList: List<Attendance>,val attendanceListeners: AttendanceAdapter.AttendanceAdapterListener) :
         RecyclerView.Adapter<AttendanceAdapter.AttendanceViewHolder>(){
 
-
+    interface AttendanceAdapterListener {
+        fun viewAttendance(position: Int)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttendanceViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.row_attendance,parent,false)
         return AttendanceViewHolder(view)
-
-
     }
 
     override fun onBindViewHolder(holder: AttendanceViewHolder, position: Int) {
@@ -35,13 +36,16 @@ class AttendanceAdapter(val context: Context, private val attendanceList: List<A
         val subjectClass = ClassroomFragment.subjectClass!!
         holder.attendanceNote.text = attendance.attendanceNote
         holder.textDate.text = dateFormatter(attendance.timestamp)
-        holder.buttonViewAttendees.text = "${attendance.attendees.size} Students"
+        holder.textAttendeesCount.text = "${attendance.attendees.size} Attendees"
         holder.displayTeacherInfo(subjectClass.classTeacherID!!)
         holder.switchButton.isChecked = attendance.accepting
         holder.switchButton.setOnCheckedChangeListener { _, isChecked ->
             holder.updateAttendanceStatus(isChecked,subjectClass.classID!!,
                 attendance.attendanceID!!
             )
+        }
+        holder.buttonViewAttendees.setOnClickListener {
+            attendanceListeners.viewAttendance(position)
         }
 
     }
@@ -53,9 +57,11 @@ class AttendanceAdapter(val context: Context, private val attendanceList: List<A
         private val textTeacherName : TextView = itemView.findViewById(R.id.textClassTeacherName)
         private val imageTeacherProfile :  CircleImageView = itemView.findViewById(R.id.imageTeacherProfile)
         val attendanceNote : TextView = itemView.findViewById(R.id.textAtttandanceInfo)
+        val textAttendeesCount : TextView= itemView.findViewById(R.id.textAttendeesCount)
         val textDate : TextView = itemView.findViewById(R.id.textDate)
         val buttonViewAttendees : Button = itemView.findViewById(R.id.buttonViewAttendees)
         val switchButton : SwitchCompat = itemView.findViewById(R.id.toggleButton)
+
         val firestore = FirebaseFirestore.getInstance()
         fun displayTeacherInfo(teacherID : String) {
             firestore.collection(Users.TABLE_NAME)

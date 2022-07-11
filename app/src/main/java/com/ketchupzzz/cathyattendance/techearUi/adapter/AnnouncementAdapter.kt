@@ -27,7 +27,7 @@ class AnnouncementAdapter(val context: Context, private val announcementList: Li
     override fun onBindViewHolder(holder: AnnouncementViewHolder, position: Int) {
         val announcements = announcementList[position]
         holder.textContent.text = announcements.announcementContent
-        holder.bindWriterInfo(announcements.writerID!!)
+
         holder.textTimestamp.text = dateFormatter(announcements.timestamp)
     }
 
@@ -37,30 +37,11 @@ class AnnouncementAdapter(val context: Context, private val announcementList: Li
     class AnnouncementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageWriter : ImageView = itemView.findViewById(R.id.imageWriter)
         private val textWriterName : TextView = itemView.findViewById(R.id.textWriterName)
-        val buttonSettings : ImageButton = itemView.findViewById(R.id.buttonSettings)
         val textContent : TextView = itemView.findViewById(R.id.textContent)
         val textTimestamp : TextView = itemView.findViewById(R.id.textTimestamp)
 
-        fun bindWriterInfo(writerID : String) {
-            FirebaseFirestore.getInstance().collection(Users.TABLE_NAME).document(writerID)
-                .get().addOnSuccessListener { document ->
-                    if (document.exists()){
-                        val users = document.toObject(Users::class.java)
-                        if (users != null) {
-                            if (users.userProfile.isNotEmpty()) {
-                                Picasso.get().load(users.userProfile).into(imageWriter)
-                            }
-                            textWriterName.text = "${users.firstname} ${users.lastname}"
-                            if (users.userID.equals(writerID)){
-                                buttonSettings.visibility = View.VISIBLE
-                            } else {
-                                buttonSettings.visibility = View.GONE
-                            }
-                        }
-                    }
 
-                }
-        }
+
     }
     private fun dateFormatter(timestamp: Long) : String{
         val date = Date(timestamp)

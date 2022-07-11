@@ -39,7 +39,7 @@ import com.ketchupzzz.cathyattendance.models.Attendees
 import com.ketchupzzz.cathyattendance.models.SubjectClass
 import com.ketchupzzz.cathyattendance.studentUI.adapter.StudentAttendanceAdapter
 import com.ketchupzzz.cathyattendance.studentUI.classroom.StudentClassroomFragment
-import com.ketchupzzz.cathyattendance.viewmodels.AttendeesViewModel
+import com.ketchupzzz.cathyattendance.viewmodels.AttendanceViewModel
 import java.io.IOException
 import java.sql.Date
 import java.text.SimpleDateFormat
@@ -59,14 +59,14 @@ class StudentAttendanceTab : Fragment(),StudentAttendanceAdapter.StudentAttendan
     private var selfieUri: Uri? = null
     private var  position: Int ? = null
     private lateinit var progressDialog : ProgressDialog
-    private lateinit var attendeesViewModel: AttendeesViewModel
+    private lateinit var attendeesViewModel: AttendanceViewModel
     private fun init(classID : String) {
         progressDialog = ProgressDialog(requireActivity())
         firestore = FirebaseFirestore.getInstance()
         binding.recyclerviewStudentAttendance.layoutManager = LinearLayoutManager(binding.root.context)
         getAllAttendance(classID)
         storage = FirebaseStorage.getInstance().getReference("SubjectClass/$classID/${dateFormatter(System.currentTimeMillis())}/")
-        attendeesViewModel = ViewModelProvider(requireActivity())[AttendeesViewModel::class.java]
+        attendeesViewModel = ViewModelProvider(requireActivity())[AttendanceViewModel::class.java]
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

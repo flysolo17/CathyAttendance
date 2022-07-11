@@ -77,7 +77,7 @@ class NotificationFragment : Fragment(),InvitationAdapter.InvitationClicks {
 
     override fun accept(position: Int) {
         val invitations = invitationList[position]
-        val students = Students(invitations.studentID,1)
+        val students = Students(invitations.studentID)
         acceptInvite(invitations.classID!!,students)
     }
 

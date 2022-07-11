@@ -47,14 +47,7 @@ class SearchClassFragment : Fragment(),StudentClassesAdapter.ViewClassroom {
         super.onViewCreated(view, savedInstanceState)
         val myID = FirebaseAuth.getInstance().currentUser!!.uid
         init(myID)
-        binding.buttonSearch.setOnClickListener {
-            val searchText = binding.inputSearch.text.toString()
-            if (searchText.isNotEmpty()) {
-                searchClass(myID,searchText)
-            } else {
-                binding.inputSearch.error = "enter class title"
-            }
-        }
+
     }
     private fun getALlClasses(myID: String){
         classList = mutableListOf()
@@ -71,23 +64,6 @@ class SearchClassFragment : Fragment(),StudentClassesAdapter.ViewClassroom {
                 }
             }
     }
-    private fun searchClass(myID: String,searchText : String){
-        classList = mutableListOf()
-        firestore.collection(SubjectClass.TABLE_NAME)
-            .whereEqualTo(SubjectClass.CLASS_TITLE,searchText)
-            .addSnapshotListener { value, error ->
-                classList.clear()
-                if (error != null) {
-                    error.printStackTrace()
-                } else {
-                    value?.map { document ->
-                        val subjectClass = document.toObject(SubjectClass::class.java)
-                        fetchAllMyClass(subjectClass,myID)
-                    }
-                }
-            }
-    }
-
     private fun fetchAllMyClass(subjectClass: SubjectClass, myID: String) {
         firestore.collection(SubjectClass.TABLE_NAME)
             .document(subjectClass.classID!!)
@@ -111,14 +87,15 @@ class SearchClassFragment : Fragment(),StudentClassesAdapter.ViewClassroom {
     override fun onClassroomClick(position: Int) {
         val subjectClass = classList[position]
         if (subjectClass.open!!) {
-            showJoinClassDialog(classList[position])
+            showJoinClassDialog(position)
         } else {
             Toast.makeText(context,"${subjectClass.classTitle} is not accepting students anymore",Toast.LENGTH_SHORT).show()
         }
 
     }
-    private fun showJoinClassDialog(subjectClass: SubjectClass) {
+    private fun showJoinClassDialog(position: Int) {
         val view = LayoutInflater.from(binding.root.context).inflate(R.layout.dialog_join_class,binding.root,false)
+        val subjectClass = classList[position]
       MaterialAlertDialogBuilder(binding.root.context)
             .setView(view)
           .setNegativeButton("Cancel") { dialog, i ->
@@ -127,7 +104,7 @@ class SearchClassFragment : Fragment(),StudentClassesAdapter.ViewClassroom {
           .setPositiveButton("Accept") { dialog, i ->
               val input : EditText = view.findViewById(R.id.inputClassCode)
               if (subjectClass.classCode == input.text.toString()) {
-                  val students = Students(FirebaseAuth.getInstance().currentUser?.uid,0)
+                  val students = Students(FirebaseAuth.getInstance().currentUser?.uid)
                   acceptInvite(subjectClass.classID!!,students)
               } else {
                   Toast.makeText(context, "Invalid Code", Toast.LENGTH_SHORT).show()

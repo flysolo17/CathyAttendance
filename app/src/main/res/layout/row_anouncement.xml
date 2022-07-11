@@ -33,22 +33,10 @@
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 />
-            <TextView
-                android:id="@+id/textTimestamp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_light"
-                android:text="timestamp"/>
+
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/buttonSettings"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/ic_more"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
@@ -65,37 +53,14 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="#6C6A6A"/>
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textTimestamp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Like"
-            android:layout_weight="1"
-            android:id="@+id/buttonViewAttendees"
-            android:textColor="@color/black"
-            android:textAllCaps="false"
-            android:drawableLeft="@drawable/ic_document"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/black"/>
-        <Button
-            android:id="@+id/buttonTakeAttendance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Comments"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            android:textAllCaps="false"
-            android:drawableLeft="@drawable/ic_camera"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
-    </LinearLayout>
-
+        android:layout_margin="10dp"
+        android:layout_gravity="end"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_light"
+        android:text="timestamp"/>
 
 </LinearLayout>

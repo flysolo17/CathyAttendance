@@ -1,32 +1,27 @@
 package com.ketchupzzz.cathyattendance.techearUi.bottom_nav
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.NonNull
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.facebook.*
-import com.facebook.login.LoginManager
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import com.facebook.login.LoginResult
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ketchupzzz.cathyattendance.databinding.FragmentProfileBinding
 import com.ketchupzzz.cathyattendance.dialogs.ChangePasswordDialog
 import com.ketchupzzz.cathyattendance.dialogs.EditProfileDialog
 import com.ketchupzzz.cathyattendance.loginsystem.LoginActivity
 import com.ketchupzzz.cathyattendance.models.Users
-import com.ketchupzzz.cathyattendance.techearUi.TeacherMainScreen
 import com.ketchupzzz.cathyattendance.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 
@@ -36,6 +31,7 @@ class ProfileFragment : Fragment() {
     private lateinit var callbackManager: CallbackManager
     private lateinit var firestore : FirebaseFirestore
     private lateinit var userViewModel: UserViewModel
+    private var accessToken = AccessToken
     private  var users: Users? = null
     private fun init() {
         firestore = FirebaseFirestore.getInstance()
@@ -54,6 +50,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        callbackManager = CallbackManager.Factory.create() //initialize callback manager
         binding.buttonLogout.setOnClickListener {
             MaterialAlertDialogBuilder(view.context)
                 .setTitle("Logout")
@@ -61,14 +58,16 @@ class ProfileFragment : Fragment() {
                 .setNegativeButton("Cancel") { dialog, i ->
                     dialog.dismiss()
                 }.setPositiveButton("Logout") { _, _ ->
+
                     FirebaseAuth.getInstance().signOut()
                     startActivity(Intent(requireActivity(), LoginActivity::class.java))
+
                 }.show()
 
         }
         // Callback registration
         binding.loginButton.setFragment(this)
-        callbackManager = CallbackManager.Factory.create() //initialize callback manager
+
         binding.loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
                 linkWithFacebook(result.accessToken)
@@ -79,7 +78,6 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onError(exception: FacebookException) {
-                exception.printStackTrace()
             }
         })
 
@@ -104,22 +102,17 @@ class ProfileFragment : Fragment() {
     private fun getUserInfo(myID: String) {
         firestore.collection(Users.TABLE_NAME)
             .document(myID)
-            .addSnapshotListener { value, error ->
-                if (error != null) {
-                    Toast.makeText(binding.root.context,"error: ${error.message}",Toast.LENGTH_SHORT).show()
-                }
-                else {
-                    if (value != null) {
-                        if (value.exists()) {
-                            val user = value.toObject(Users::class.java)
-                            if (user != null) {
-                                users = user
-                                bindViews(users!!)
-                            }
-                        }
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val user = document.toObject(Users::class.java)
+                    if (user != null) {
+                        users = user
+                        bindViews(users!!)
                     }
                 }
             }
+
     }
 
     private fun bindViews(user: Users){

@@ -20,20 +20,35 @@
             android:layout_margin="5dp"
             android:src="@drawable/ic_profile"
             app:civ_border_color="#FF000000"/>
-        <TextView
-            android:id="@+id/textClassTeacherName"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/teacher_s_name"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:fontFamily="@font/poppins_medium"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textClassTeacherName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/teacher_s_name"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_light"
+                android:text="@string/june_4_2023"
+                android:id="@+id/textDate"/>
+        </LinearLayout>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/toggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             />
     </LinearLayout>
 
@@ -50,33 +65,32 @@
             android:fontFamily="@font/poppins_light"
             android:text="@string/fonts_are_an_important_part_of_your_site_typography_fonts_that_are_too_fancy_can_be_hard_to_read_while_too_plain_ones_can_be_outright_boring_that_s_why_you_should_focus_on_choosing_a_font_that_s_legible_yet_appealing"
             android:id="@+id/textAtttandanceInfo"/>
-            <Button
-                android:id="@+id/buttonViewAttendees"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Student Count"
-                android:textAllCaps="false"
-                android:layout_gravity="end"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
-
-
-
+        <TextView
+            android:id="@+id/textAttendeesCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0 attendees"
+            android:gravity="end"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:fontFamily="@font/poppins_light"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:background="#6C6A6A"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:gravity="end"
-                android:fontFamily="@font/poppins_light"
-                android:text="@string/june_4_2023"
-                android:id="@+id/textDate"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_attendees"
+            android:layout_gravity="end"
+            android:id="@+id/buttonViewAttendees"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/ic_document"
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
     </LinearLayout>
 
 

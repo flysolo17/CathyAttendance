@@ -55,6 +55,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val accessToken = AccessToken.getCurrentAccessToken()
+        val isLoggedIn = accessToken != null && !accessToken.isExpired
+        if (!isLoggedIn) {
+            accessToken?.expiredPermissions
+        }
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         init()
         signUp(binding.textCreateAccount)
@@ -89,7 +95,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onError(error: FacebookException) {
-                Log.d(TAG,error.message.toString())
             }
         })
     }
@@ -203,6 +208,7 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) updateUI(currentUser.uid)
+
     }
 
 

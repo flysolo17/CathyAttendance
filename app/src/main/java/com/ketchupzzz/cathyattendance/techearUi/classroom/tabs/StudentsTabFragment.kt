@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.ketchupzzz.cathyattendance.databinding.FragmentStudentsTabBinding
+import com.ketchupzzz.cathyattendance.dialogs.ViewStudentRecord
 import com.ketchupzzz.cathyattendance.models.Invitations
 import com.ketchupzzz.cathyattendance.models.Students
 import com.ketchupzzz.cathyattendance.models.SubjectClass
@@ -19,6 +22,7 @@ import com.ketchupzzz.cathyattendance.models.Users
 import com.ketchupzzz.cathyattendance.techearUi.adapter.StudentsAdapter
 import com.ketchupzzz.cathyattendance.techearUi.adapter.UsersAdapter
 import com.ketchupzzz.cathyattendance.techearUi.classroom.ClassroomFragment
+import com.ketchupzzz.cathyattendance.viewmodels.StudentsViewModel
 
 
 class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.StudentsClickListener {
@@ -29,8 +33,9 @@ class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.Stu
     private lateinit var firestore: FirebaseFirestore
     private lateinit var usersList: MutableList<Users>
     private lateinit var classStudents: MutableList<Students>
-
+    private lateinit var studentsViewModel: StudentsViewModel
     private fun init() {
+        studentsViewModel = ViewModelProvider(requireActivity())[StudentsViewModel::class.java]
         firestore = FirebaseFirestore.getInstance()
         binding.recyclerviewInviteStudents.apply {
             layoutManager = LinearLayoutManager(binding.root.context)
@@ -144,11 +149,26 @@ class StudentsFragment : Fragment(),UsersAdapter.OnUserClick,StudentsAdapter.Stu
 
     override fun removeFromClass(position: Int) {
         val classID = ClassroomFragment.subjectClass!!.classID
-        removeStudentFromClass(classID!!, classStudents[position].studentID!!)
+        MaterialAlertDialogBuilder(binding.root.context)
+            .setTitle("Delete Student")
+            .setMessage("Are you sure you want do delete this student?")
+            .setPositiveButton("Yes") { dialog,_->
+                removeStudentFromClass(classID!!, classStudents[position].studentID!!)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog,_->
+                dialog.dismiss()
+            }
+            .show()
+
     }
 
     override fun onStudentClick(position: Int) {
-        TODO("Not yet implemented")
+        studentsViewModel.setStudent(classStudents[position])
+        val viewStudentRecord= ViewStudentRecord()
+        if (!viewStudentRecord.isAdded) {
+            viewStudentRecord.show(childFragmentManager,"Student Record")
+        }
     }
 
     private fun cancelMyInvitation(position : Int) {

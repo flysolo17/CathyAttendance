@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.ketchupzzz.cathyattendance.models.Attendance
 import com.ketchupzzz.cathyattendance.models.Attendees
 
-class AttendeesViewModel : ViewModel() {
+class AttendanceViewModel : ViewModel() {
     val selected = MutableLiveData<Attendance>()
 
     fun setAttendance(attendance: Attendance) {

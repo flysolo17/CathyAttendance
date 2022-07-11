@@ -31,13 +31,28 @@
             android:layout_height="wrap_content"
             android:text="Status"
             android:fontFamily="@font/poppins_light"/>
-
-        <Button
-            android:id="@+id/buttonRemoveFromClass"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#F44336"
-            android:text="Remove" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/buttonRemoveFromClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F44336"
+                android:layout_weight="1"
+                android:text="Remove" />
+            <Button
+                android:id="@+id/buttonViewRecords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/records"
+                android:textColor="@color/black"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+        </LinearLayout>
+
+
 
     </LinearLayout>
 </LinearLayout>

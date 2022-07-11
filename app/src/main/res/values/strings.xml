@@ -52,6 +52,25 @@
     <string name="timestamp">Timestamp</string>
     <string name="date">Date</string>
     <string name="no_attendees_yet">No Attendees yet!</string>
+    <string name="view_attendees">View Attendees</string>
+    <string name="records">Records</string>
+    <string name="_0">0</string>
+    <string name="attendance">Attendance</string>
+    <string name="absent">Absent</string>
+    <string name="students_fullname">Students fullname</string>
+    <string name="add_new_activity">Add new activity</string>
+    <string name="activity_name">Activity Name</string>
+    <string name="activity_type">Activity Type</string>
+    <string name="date_taken">Date Taken</string>
+    <string name="activity_total_score">Activity Total Score</string>
+    <string name="name">Name</string>
+    <string name="grade">Grade</string>
 
+
+    <string-array name="term">
+        <item>First Grading</item>
+        <item>Second Grading</item>
+        <item>Third Grading</item>
+    </string-array>
 
 </resources>

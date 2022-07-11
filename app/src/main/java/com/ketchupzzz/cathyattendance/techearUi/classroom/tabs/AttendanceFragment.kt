@@ -8,28 +8,32 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ketchupzzz.cathyattendance.R
 import com.ketchupzzz.cathyattendance.databinding.FragmentAttendanceBinding
+import com.ketchupzzz.cathyattendance.dialogs.ViewAttendeesFragment
 import com.ketchupzzz.cathyattendance.models.Attendance
 import com.ketchupzzz.cathyattendance.models.SubjectClass
 import com.ketchupzzz.cathyattendance.techearUi.adapter.AttendanceAdapter
 import com.ketchupzzz.cathyattendance.techearUi.classroom.ClassroomFragment
+import com.ketchupzzz.cathyattendance.viewmodels.AttendanceViewModel
 
 
-class AttendanceFragment : Fragment() {
+class AttendanceFragment : Fragment(),AttendanceAdapter.AttendanceAdapterListener {
 
     private lateinit var binding : FragmentAttendanceBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var attendanceAdapter: AttendanceAdapter
     private lateinit var attendanceList: MutableList<Attendance>
-
+    private lateinit var attendanceViewModel : AttendanceViewModel
     private fun init(subjectID: String) {
         firestore = FirebaseFirestore.getInstance()
         binding.recyclerviewAttendance.layoutManager = LinearLayoutManager(binding.root.context)
         getAllAttendance(subjectID)
+        attendanceViewModel = ViewModelProvider(requireActivity())[AttendanceViewModel::class.java]
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,9 +98,17 @@ class AttendanceFragment : Fragment() {
                         val attendance = queryDocumentSnapshot.toObject(Attendance::class.java)
                         attendanceList.add(attendance)
                     }
-                    attendanceAdapter = AttendanceAdapter(binding.root.context,attendanceList)
+                    attendanceAdapter = AttendanceAdapter(binding.root.context,attendanceList,this)
                     binding.recyclerviewAttendance.adapter = attendanceAdapter
                 }
             }
+    }
+
+    override fun viewAttendance(position: Int) {
+        attendanceViewModel.setAttendance(attendanceList[position])
+        val viewAttendeesFragment = ViewAttendeesFragment();
+        if (!viewAttendeesFragment.isAdded) {
+            viewAttendeesFragment.show(childFragmentManager,"View Attendees")
+        }
     }
 }

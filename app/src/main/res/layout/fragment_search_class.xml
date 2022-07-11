@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search Class"
+            android:text="Other Classes"
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -25,30 +25,7 @@
         android:orientation="vertical"
         android:paddingTop="20dp"
         android:background="@drawable/cards_background">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/inputSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Search Class here!"
-                android:textSize="15sp"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:background="@drawable/ic_rectangle_200"
-                />
-            <ImageButton
-                android:id="@+id/buttonSearch"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/ic_send"/>
-        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewOtherClasses"

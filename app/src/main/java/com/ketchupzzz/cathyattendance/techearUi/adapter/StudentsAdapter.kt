@@ -30,9 +30,10 @@ class StudentsAdapter(val context: Context, private val studentsList: List<Stude
         holder.buttonRemove.setOnClickListener {
             studentsClickListener.removeFromClass(position)
         }
-        holder.itemView.setOnClickListener {
+        holder.buttonViewRecord.setOnClickListener {
             studentsClickListener.onStudentClick(position)
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -43,6 +44,7 @@ class StudentsAdapter(val context: Context, private val studentsList: List<Stude
         private val textStudentName : TextView = itemView.findViewById(R.id.textStudentsName)
         private val textStudentIDNumber : TextView = itemView.findViewById(R.id.textIdNumber)
         val buttonRemove : Button = itemView.findViewById(R.id.buttonRemoveFromClass)
+        val buttonViewRecord : Button = itemView.findViewById(R.id.buttonViewRecords)
         private val firestore = FirebaseFirestore.getInstance()
         fun bindStudents(studentID : String) {
             firestore

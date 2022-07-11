@@ -1,8 +1,6 @@
 package com.ketchupzzz.cathyattendance.dialogs
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +13,14 @@ import com.ketchupzzz.cathyattendance.R
 import com.ketchupzzz.cathyattendance.databinding.FragmentViewAttendeesBinding
 import com.ketchupzzz.cathyattendance.models.Attendees
 import com.ketchupzzz.cathyattendance.models.Users
-import com.ketchupzzz.cathyattendance.viewmodels.AttendeesViewModel
+import com.ketchupzzz.cathyattendance.viewmodels.AttendanceViewModel
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ViewAttendeesFragment : DialogFragment() {
     private lateinit var binding : FragmentViewAttendeesBinding
-    private lateinit var attendeesViewModel: AttendeesViewModel
+    private lateinit var attendeesViewModel: AttendanceViewModel
     private lateinit var firestore: FirebaseFirestore
     private fun init() {
         firestore = FirebaseFirestore.getInstance()
@@ -45,7 +43,7 @@ class ViewAttendeesFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         binding.buttonback.setOnClickListener { dismiss() }
-        attendeesViewModel = ViewModelProvider(requireActivity())[AttendeesViewModel::class.java]
+        attendeesViewModel = ViewModelProvider(requireActivity())[AttendanceViewModel::class.java]
         attendeesViewModel.getAttendance().observe(viewLifecycleOwner) {attendance ->
             if (attendance != null) {
                 attendance.attendees.map { attendees ->

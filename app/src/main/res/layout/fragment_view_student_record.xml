@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".studentUI.tabs.StudentRecordTab">
-
+    android:orientation="vertical"
+    tools:context=".dialogs.ViewStudentRecord">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:background="@color/purple_700">
+        <ImageButton
+            android:id="@+id/buttonBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_back1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/black"
+            android:text="@string/records"/>
+        <ImageButton
+            android:id="@+id/buttonAddRecord"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_add"/>
+    </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,19 +142,27 @@
                 android:gravity="center"
                 android:layout_margin="5dp">
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Term"
+                    android:textSize="14sp"
+                    android:layout_weight=".6"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_medium"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Grade"
                     android:textSize="14sp"
                     android:layout_weight="1"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_medium"/>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Grade"
+                    android:text="Edit"
                     android:textSize="14sp"
-
+                    android:layout_weight="1"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppins_medium"/>
             </LinearLayout>
@@ -181,5 +218,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/recyclerViewActivities"/>
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>
