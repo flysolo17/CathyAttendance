@@ -1,9 +1,7 @@
 package com.ketchupzzz.cathyattendance.models
 
 class Students(val studentID : String? = null,
-               val gradeList: List<Grade> = listOf(Grade("First Grading"),Grade("Second Grading"),
-                   Grade("Fourth Grading")
-               ),
+               val gradeList: List<Grade> = listOf(Grade("First Grading"),Grade("Second Grading"),Grade("Third Grading"),Grade("Fourth Grading")),
                val timestamp : Long = System.currentTimeMillis()) {
 
     companion object {
